@@ -2,10 +2,10 @@
 /**
  * Notification messages
  *
- * @package		Notice
- * @author		Miodrag Tokić
+ * @package	Notice
+ * @author	Miodrag Tokić
  * @copyright	Copyright (c) 2009 - 2010, Miodrag Tokić
- * @license		http://www.opensource.org/licenses/bsd-license.php	BSD
+ * @license	http://www.opensource.org/licenses/bsd-license.php	BSD
  */
 class Notice_Core {
 
@@ -34,7 +34,6 @@ class Notice_Core {
 	 * @param	array	Message variables
 	 * @param	array	Additional message items
 	 * @return	void
-	 * @throws	Kohana_Exception
 	 */
 	public static function add($type, $message = NULL, array $variables = NULL, array $items = array())
 	{
@@ -64,13 +63,12 @@ class Notice_Core {
 	}
 
 	/**
-	 * Displays notification(s)
+	 * Displays notification
 	 *
 	 * If notification type omitted, displays all notification types
 	 *
 	 * @param	string	Notification type
 	 * @return	void
-	 * @throws	Kohana_Exception
 	 */
 	public static function render($type = NULL)
 	{
@@ -95,8 +93,7 @@ class Notice_Core {
 	}
 
 	/**
-	 * Implemened K 2.3 get_once() method from Session class,
-	 * until it's implemented in K 3
+	 * Implemened K 2.3 get_once() method from Session class
 	 */
 	protected static function get_once($type)
 	{
