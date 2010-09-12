@@ -24,9 +24,21 @@ Add a new message.
 		'Check your connection', 'Check configuration settings'
 	));
 
-Render the Notice view.
+Render the notifications.
 
 	View::factory('download')
 		->bind('notice', $notice);
 
 	$notice = Notice::render();
+
+Render the notifications as json (useful for AJAX response).
+
+	Notice::render(NULL, 'json');
+
+Get all the *error* notices as array.
+
+	$errors = Notice::as_array(Notice::ERROR);
+
+Clear the *warning* notices.
+
+	Notice::clear(Notice::WARNING);
