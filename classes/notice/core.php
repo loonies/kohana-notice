@@ -59,12 +59,12 @@ class Notice_Core {
 		switch ($view)
 		{
 			case 'json':
-				$output = json_encode(Notice::as_array($type, TRUE));
+				$output = json_encode(Notice::as_array($type));
 			break;
 
 			default:
 				$output = View::factory(Notice::$view)
-					->set('notifications', Notice::as_array($type, TRUE))
+					->set('notifications', Notice::as_array($type))
 					->render();
 		}
 
