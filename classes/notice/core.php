@@ -11,6 +11,11 @@
 class Notice_Core {
 
 	/**
+	 * @var  string  Session type
+	 */
+	public static $session = NULL;
+
+	/**
 	 * @var  string  View file
 	 */
 	public static $view = 'notice/base';
@@ -33,7 +38,7 @@ class Notice_Core {
 	 */
 	public static function add($type, $message = NULL, array $variables = NULL, array $items = array())
 	{
-		$session = Session::instance('native');
+		$session = Session::instance(Notice::$session);
 
 		$notifications = $session->get('notice', array());
 
@@ -82,7 +87,7 @@ class Notice_Core {
 	 */
 	public static function as_array($type = NULL)
 	{
-		$session = Session::instance('native');
+		$session = Session::instance(Notice::$session);
 
 		// Import the session data localy
 		$data = $session->as_array();
@@ -105,7 +110,7 @@ class Notice_Core {
 	 */
 	public static function clear($type = NULL)
 	{
-		$session = Session::instance('native');
+		$session = Session::instance(Notice::$session);
 
 		// Assign the session data localy
 		$data =& $session->as_array();
