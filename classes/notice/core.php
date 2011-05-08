@@ -13,7 +13,7 @@ class Notice_Core {
 	/**
 	 * @var  string  Current version
 	 */
-	const VERSION = '0.1';
+	const VERSION = '0.2';
 
 	/**
 	 * @var  string  Session type
