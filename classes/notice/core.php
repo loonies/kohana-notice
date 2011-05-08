@@ -2,42 +2,48 @@
 /**
  * Notification messages
  *
- * @package	Notice
- * @author	Miodrag Tokić
- * @copyright	Copyright (c) 2009 - 2010, Miodrag Tokić
- * @license	http://www.opensource.org/licenses/bsd-license.php	BSD
+ * @package	   Notice
+ * @category   Base
+ * @author	   Miodrag Tokić
+ * @copyright  (c) 2009-2010, Miodrag Tokić
+ * @license    MIT
  */
 class Notice_Core {
 
 	/**
-	 * @var	string	Messages file
+	 * @var  string  Current version
 	 */
-	public static $file = 'notice';
+	const VERSION = '0.2';
 
 	/**
-	 * @var	string	View file
+	 * @var  string  Session type
+	 */
+	public static $session = NULL;
+
+	/**
+	 * @var  string  View file
 	 */
 	public static $view = 'notice/base';
 
 	// Notice message types
-	const ERROR   = 'error';
-	const WARNING = 'warning';
-	const VALID   = 'validation';
-	const INFO    = 'information';
-	const SUCCESS = 'success';
+	const ERROR      = 'error';
+	const WARNING    = 'warning';
+	const VALIDATION = 'validation';
+	const INFO       = 'information';
+	const SUCCESS    = 'success';
 
 	/**
 	 * Adds new notification message
 	 *
-	 * @param	string	Message type
-	 * @param	string	Message text
-	 * @param	array	Message variables
-	 * @param	array	Additional message items
+	 * @param   string  Message type
+	 * @param   string  Message text
+	 * @param   array   Message variables
+	 * @param   array   Additional message items
 	 * @return	void
 	 */
 	public static function add($type, $message = NULL, array $variables = NULL, array $items = array())
 	{
-		$session = Session::instance('native');
+		$session = Session::instance(Notice::$session);
 
 		$notifications = $session->get('notice', array());
 
@@ -50,74 +56,77 @@ class Notice_Core {
 	}
 
 	/**
-	 * Returns a message from a file.
-	 *
-	 * @uses	Kohana::message
-	 *
-	 * @param	string	Message key
-	 * @return	string
-	 */
-	public static function message($key)
-	{
-		return Kohana::message(Notice::$file, $key);
-	}
-
-	/**
-	 * Displays notification
+	 * Displays notifications
 	 *
 	 * If notification type omitted, displays all notification types
 	 *
-	 * @param	string	Notification type
+	 * @param   string  Notification type
+	 * @param   string  View type
 	 * @return	void
 	 */
-	public static function render($type = NULL)
+	public static function render($type = NULL, $view = NULL)
 	{
-		if ($type === NULL)
+		switch ($view)
 		{
-			$session = Session::instance('native');
+			case 'json':
+				$output = json_encode(Notice::as_array($type));
+			break;
 
-			// Import all notification types localy
-			$notifications = $session->get('notice', array());
-
-			// Clear notice session
-			$session->set('notice', array());
-		}
-		else
-		{
-			$notifications[$type] = Notice::get_once($type);
+			default:
+				$output = View::factory(Notice::$view)
+					->set('notifications', Notice::as_array($type))
+					->render();
 		}
 
-		return View::factory(Notice::$view)
-			->set('notifications', $notifications)
-			->render();
+		// Clear the notifications after rendering
+		Notice::clear($type);
+
+		return $output;
 	}
 
 	/**
-	 * Implemened K 2.3 get_once() method from Session class
+	 * Returns the current notification array.
+	 *
+	 * @param    string  Notification type
+	 * @return   array
 	 */
-	protected static function get_once($type)
+	public static function as_array($type = NULL)
 	{
-		$session = Session::instance('native');
+		$session = Session::instance(Notice::$session);
 
-		$notifications = $session->get('notice', array());
+		// Import the session data localy
+		$data = $session->as_array();
 
-		$data = Arr::get($notifications, $type, array());
-
-		// Remove flash data
-		unset($notifications[$type]);
-
-		$session->set('notice', $notifications);
-
-		return $data;
+		if ($type === NULL)
+		{
+			return Arr::path($data, 'notice', array());
+		}
+		else
+		{
+			return array($type => Arr::path($data, 'notice.'.$type));
+		}
 	}
 
-	final private function __construct()
+	/**
+	 * Clears the notifications
+	 *
+	 * @param    string  Notification type
+	 * @return   void
+	 */
+	public static function clear($type = NULL)
 	{
-		// Enforce singleton behavior
-	}
+		$session = Session::instance(Notice::$session);
 
-	private function __clone()
-	{
-		// Enforce singleton behavior
+		// Assign the session data localy
+		$data =& $session->as_array();
+
+		if ($type === NULL)
+		{
+			unset($data['notice']);
+		}
+		else
+		{
+			unset($data['notice'][$type]);
+		}
 	}
 }
