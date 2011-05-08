@@ -11,6 +11,11 @@
 class Notice_Core {
 
 	/**
+	 * @var  string  Current version
+	 */
+	const VERSION = '0.1';
+
+	/**
 	 * @var  string  Session type
 	 */
 	public static $session = NULL;
