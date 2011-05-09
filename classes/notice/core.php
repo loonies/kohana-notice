@@ -10,9 +10,7 @@
  */
 class Notice_Core {
 
-	/**
-	 * @var  string  Current version
-	 */
+	// Current version
 	const VERSION = '0.2';
 
 	/**
