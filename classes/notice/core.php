@@ -2,9 +2,9 @@
 /**
  * Notification messages
  *
- * @package	   Notice
+ * @package    Notice
  * @category   Base
- * @author	   Miodrag Tokić
+ * @author     Miodrag Tokić
  * @copyright  (c) 2009-2010, Miodrag Tokić
  * @license    MIT
  */
