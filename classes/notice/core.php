@@ -18,11 +18,6 @@ class Notice_Core {
 	 */
 	public static $session = NULL;
 
-	/**
-	 * @var  string  View file
-	 */
-	public static $view = 'notice/base';
-
 	// Notice message types
 	const ERROR      = 'error';
 	const WARNING    = 'warning';
@@ -31,84 +26,93 @@ class Notice_Core {
 	const SUCCESS    = 'success';
 
 	/**
-	 * Adds new notification message
+	 * Adds a new notice message
 	 *
 	 * @param   string  Message type
 	 * @param   string  Message text
 	 * @param   array   Message variables
-	 * @param   array   Additional message items
+	 * @param   array   Additional messages
 	 * @return	void
 	 */
 	public static function add($type, $message = NULL, array $variables = NULL, array $items = array())
 	{
 		$session = Session::instance(Notice::$session);
 
-		$notifications = $session->get('notice', array());
+		$notices = $session->get('notice', array());
 
-		$notifications[$type][] = array(
-			'message'	=>	__($message, $variables),
-			'items'		=>	$items,
+		$notices[$type][] = array(
+			'type'      => $type,
+			'message'   => $message,
+			'variables' => $variables,
+			'items'     => $items,
 		);
 
-		$session->set('notice', $notifications);
+		$session->set('notice', $notices);
 	}
 
 	/**
-	 * Displays notifications
+	 * Render the notices
 	 *
-	 * If notification type omitted, displays all notification types
+	 * If notice type omitted, render all notice types
 	 *
-	 * @param   string  Notification type
-	 * @param   string  View type
-	 * @return	void
+	 * @param   string  Notice type
+	 * @return	array
 	 */
-	public static function render($type = NULL, $view = NULL)
+	public static function render($type = NULL)
 	{
-		switch ($view)
-		{
-			case 'json':
-				$output = json_encode(Notice::as_array($type));
-			break;
+		$rendered = array();
 
-			default:
-				$output = View::factory(Notice::$view)
-					->set('notifications', Notice::as_array($type))
-					->render();
+		$notices = Notice::as_array($type);
+
+		foreach ($notices as $_type => $set)
+		{
+			foreach ($set as $notice)
+			{
+				// Translate the notice
+				$rendered[$_type][] = array(
+					'type'    => __($notice['type']),
+					'message' => __($notice['message'], $notice['variables']),
+					'items'   => array_map('__', $notice['items']),
+				);
+			}
 		}
 
-		// Clear the notifications after rendering
+		// Clear the notices
 		Notice::clear($type);
 
-		return $output;
+		return $rendered;
 	}
 
 	/**
-	 * Returns the current notification array.
+	 * Return notices as raw array
 	 *
-	 * @param    string  Notification type
+	 * @param    string  Notice type
 	 * @return   array
 	 */
 	public static function as_array($type = NULL)
 	{
 		$session = Session::instance(Notice::$session);
 
-		// Import the session data localy
-		$data = $session->as_array();
+		$notices = $session->get('notice', array());
 
-		if ($type === NULL)
+		$filtered = array();
+
+		foreach ($notices as $_type => $set)
 		{
-			return Arr::path($data, 'notice', array());
+			if ($type === $_type OR $type === NULL)
+			{
+				// Add to filtered
+				$filtered[$_type] = $set;
+			}
 		}
-		else
-		{
-			return array($type => Arr::path($data, 'notice.'.$type));
-		}
+
+		return $filtered;
 	}
 
 	/**
-	 * Clears the notifications
+	 * Clears the notices
 	 *
-	 * @param    string  Notification type
+	 * @param    string  Notice type
 	 * @return   void
 	 */
 	public static function clear($type = NULL)
