@@ -26,6 +26,11 @@ class Notice_Core {
 	public static $session = NULL;
 
 	/**
+	 * @var  string  The message file
+	 */
+	public static $message_file = 'notice';
+
+	/**
 	 * Adds a new notice message
 	 *
 	 * @param   string  Message type
@@ -39,6 +44,12 @@ class Notice_Core {
 		$session = Session::instance(Notice::$session);
 
 		$notices = $session->get('notice', array());
+
+		if (strpos($message, ':') === 0)
+		{
+			// Get a message from a file
+			$message = Kohana::message(Notice::$message_file, substr($message, 1), $message);
+		}
 
 		$notices[$type][] = array(
 			'type'      => $type,
