@@ -1,6 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Notification messages
+ * Simple and easy to use class for storing and displaying
+ * the application notice messages to the user.
+ * The Notice class uses session to store the notice messages.
  *
  * @package    Notice
  * @category   Base
@@ -33,7 +35,13 @@ class Notice_Core {
 	/**
 	 * Adds a new notice message
 	 *
-	 * @param   string  Message type
+	 *     // Add INFO notice
+	 *     Notice::add(Notice::INFO, 'Simple example');
+	 *
+	 *     // Add INFO notice, with a message from the "notice" message file
+	 *     Notice::add(Notice::INFO, ':no_data');
+	 *
+	 * @param   string  Notice type
 	 * @param   string  Message text
 	 * @param   array   Message variables
 	 * @param   array   Additional messages
@@ -64,7 +72,15 @@ class Notice_Core {
 	/**
 	 * Clears the notices
 	 *
-	 * @param    string  Notice type
+	 * If notice type omitted, render all notice types.
+	 *
+	 *     // Clears all notices
+	 *     Notice::clear();
+	 *
+	 *     // Clears only INFO notices
+	 *     Notice::clear(Notice::INFO);
+	 *
+	 * @param    string  Notice type to filter by
 	 * @return   void
 	 */
 	public static function clear($type = NULL)
@@ -87,7 +103,15 @@ class Notice_Core {
 	/**
 	 * Return notices as raw array
 	 *
-	 * @param    string  Notice type
+	 * If notice type omitted, render all notice types.
+	 *
+	 *     // Return all notices
+	 *     Notice::clear();
+	 *
+	 *     // Return only INFO notices
+	 *     Notice::clear(Notice::INFO);
+	 *
+	 * @param    string  Notice type to filter by
 	 * @return   array
 	 */
 	public static function as_array($type = NULL)
@@ -113,9 +137,16 @@ class Notice_Core {
 	/**
 	 * Render the notices
 	 *
-	 * If notice type omitted, render all notice types
+	 * Notice messages will be translated, grouped by type and cleared.
+	 * If notice type omitted, render all notice types.
 	 *
-	 * @param   string  Notice type
+	 *     // Renders all notices
+	 *     Notice::clear();
+	 *
+	 *     // Renders only INFO notices
+	 *     Notice::clear(Notice::INFO);
+	 *
+	 * @param   string  Notice type to filter by
 	 * @return	array
 	 */
 	public static function render($type = NULL)
