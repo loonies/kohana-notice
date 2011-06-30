@@ -43,11 +43,11 @@ class Notice_Core {
 	 *
 	 * @param   string  Notice type
 	 * @param   string  Message text
-	 * @param   array   Message variables
+	 * @param   array   Values to replace in the message text
 	 * @param   array   Additional messages
 	 * @return	void
 	 */
-	public static function add($type, $message = NULL, array $variables = NULL, array $items = array())
+	public static function add($type, $message = NULL, array $values = NULL, array $items = array())
 	{
 		$session = Session::instance(Notice::$session);
 
@@ -60,10 +60,10 @@ class Notice_Core {
 		}
 
 		$notices[$type][] = array(
-			'type'      => $type,
-			'message'   => $message,
-			'variables' => $variables,
-			'items'     => $items,
+			'type'    => $type,
+			'message' => $message,
+			'values'  => $values,
+			'items'   => $items,
 		);
 
 		$session->set('notice', $notices);
@@ -162,7 +162,7 @@ class Notice_Core {
 				// Translate the notice
 				$rendered[$_type][] = array(
 					'type'    => __($notice['type']),
-					'message' => __($notice['message'], $notice['variables']),
+					'message' => __($notice['message'], $notice['values']),
 					'items'   => array_map('__', $notice['items']),
 				);
 			}
