@@ -13,16 +13,6 @@ class Notice_Core {
 	// Current version
 	const VERSION = '0.2';
 
-	/**
-	 * @var  string  Session type
-	 */
-	public static $session = NULL;
-
-	/**
-	 * @var  string  View file
-	 */
-	public static $view = 'notice/base';
-
 	// Notice message types
 	const ERROR      = 'error';
 	const WARNING    = 'warning';
@@ -31,84 +21,50 @@ class Notice_Core {
 	const SUCCESS    = 'success';
 
 	/**
-	 * Adds new notification message
+	 * @var  string  Session type
+	 */
+	public static $session = NULL;
+
+	/**
+	 * @var  string  The message file
+	 */
+	public static $message_file = 'notice';
+
+	/**
+	 * Adds a new notice message
 	 *
 	 * @param   string  Message type
 	 * @param   string  Message text
 	 * @param   array   Message variables
-	 * @param   array   Additional message items
+	 * @param   array   Additional messages
 	 * @return	void
 	 */
 	public static function add($type, $message = NULL, array $variables = NULL, array $items = array())
 	{
 		$session = Session::instance(Notice::$session);
 
-		$notifications = $session->get('notice', array());
+		$notices = $session->get('notice', array());
 
-		$notifications[$type][] = array(
-			'message'	=>	__($message, $variables),
-			'items'		=>	$items,
+		if (strpos($message, ':') === 0)
+		{
+			// Get a message from a file
+			$message = Kohana::message(Notice::$message_file, substr($message, 1), $message);
+		}
+
+		$notices[$type][] = array(
+			'type'      => $type,
+			'message'   => $message,
+			'variables' => $variables,
+			'items'     => $items,
 		);
 
-		$session->set('notice', $notifications);
+		$session->set('notice', $notices);
 	}
 
 	/**
-	 * Displays notifications
+	 * Clears the notices
 	 *
-	 * If notification type omitted, displays all notification types
-	 *
-	 * @param   string  Notification type
-	 * @param   string  View type
-	 * @return	void
-	 */
-	public static function render($type = NULL, $view = NULL)
-	{
-		switch ($view)
-		{
-			case 'json':
-				$output = json_encode(Notice::as_array($type));
-			break;
-
-			default:
-				$output = View::factory(Notice::$view)
-					->set('notifications', Notice::as_array($type))
-					->render();
-		}
-
-		// Clear the notifications after rendering
-		Notice::clear($type);
-
-		return $output;
-	}
-
-	/**
-	 * Returns the current notification array.
-	 *
-	 * @param    string  Notification type
-	 * @return   array
-	 */
-	public static function as_array($type = NULL)
-	{
-		$session = Session::instance(Notice::$session);
-
-		// Import the session data localy
-		$data = $session->as_array();
-
-		if ($type === NULL)
-		{
-			return Arr::path($data, 'notice', array());
-		}
-		else
-		{
-			return array($type => Arr::path($data, 'notice.'.$type));
-		}
-	}
-
-	/**
-	 * Clears the notifications
-	 *
-	 * @param    string  Notification type
+	 * @param    string  Notice type
 	 * @return   void
 	 */
 	public static function clear($type = NULL)
@@ -126,5 +82,64 @@ class Notice_Core {
 		{
 			unset($data['notice'][$type]);
 		}
+	}
+
+	/**
+	 * Return notices as raw array
+	 *
+	 * @param    string  Notice type
+	 * @return   array
+	 */
+	public static function as_array($type = NULL)
+	{
+		$session = Session::instance(Notice::$session);
+
+		$notices = $session->get('notice', array());
+
+		$filtered = array();
+
+		foreach ($notices as $_type => $set)
+		{
+			if ($type === $_type OR $type === NULL)
+			{
+				// Add to filtered
+				$filtered[$_type] = $set;
+			}
+		}
+
+		return $filtered;
+	}
+
+	/**
+	 * Render the notices
+	 *
+	 * If notice type omitted, render all notice types
+	 *
+	 * @param   string  Notice type
+	 * @return	array
+	 */
+	public static function render($type = NULL)
+	{
+		$rendered = array();
+
+		$notices = Notice::as_array($type);
+
+		foreach ($notices as $_type => $set)
+		{
+			foreach ($set as $notice)
+			{
+				// Translate the notice
+				$rendered[$_type][] = array(
+					'type'    => __($notice['type']),
+					'message' => __($notice['message'], $notice['variables']),
+					'items'   => array_map('__', $notice['items']),
+				);
+			}
+		}
+
+		// Clear the notices
+		Notice::clear($type);
+
+		return $rendered;
 	}
 }
