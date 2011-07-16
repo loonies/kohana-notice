@@ -15,7 +15,7 @@ class Notice_Core {
 	// Current version
 	const VERSION = '0.2';
 
-	// Notice message types
+	// Notice types
 	const ERROR      = 'error';
 	const WARNING    = 'warning';
 	const VALIDATION = 'validation';
@@ -45,7 +45,7 @@ class Notice_Core {
 	 * @param   string  Message text
 	 * @param   array   Values to replace in the message text
 	 * @param   array   Additional messages
-	 * @return	void
+	 * @return  void
 	 */
 	public static function add($type, $message = NULL, array $values = NULL, array $items = array())
 	{
@@ -80,8 +80,8 @@ class Notice_Core {
 	 *     // Clears only INFO notices
 	 *     Notice::clear(Notice::INFO);
 	 *
-	 * @param    string  Notice type to filter by
-	 * @return   void
+	 * @param   string  Notice type to filter by
+	 * @return  void
 	 */
 	public static function clear($type = NULL)
 	{
@@ -111,8 +111,8 @@ class Notice_Core {
 	 *     // Return only INFO notices
 	 *     Notice::clear(Notice::INFO);
 	 *
-	 * @param    string  Notice type to filter by
-	 * @return   array
+	 * @param   string  Notice type to filter by
+	 * @return  array
 	 */
 	public static function as_array($type = NULL)
 	{
@@ -147,7 +147,7 @@ class Notice_Core {
 	 *     Notice::clear(Notice::INFO);
 	 *
 	 * @param   string  Notice type to filter by
-	 * @return	array
+	 * @return  array
 	 */
 	public static function render($type = NULL)
 	{
