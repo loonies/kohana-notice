@@ -106,10 +106,10 @@ class Notice_Core {
 	 * If notice type omitted, render all notice types.
 	 *
 	 *     // Return all notices
-	 *     Notice::clear();
+	 *     Notice::as_array();
 	 *
 	 *     // Return only INFO notices
-	 *     Notice::clear(Notice::INFO);
+	 *     Notice::as_array(Notice::INFO);
 	 *
 	 * @param   string  Notice type to filter by
 	 * @return  array
@@ -141,10 +141,10 @@ class Notice_Core {
 	 * If notice type omitted, render all notice types.
 	 *
 	 *     // Renders all notices
-	 *     Notice::clear();
+	 *     Notice::render();
 	 *
 	 *     // Renders only INFO notices
-	 *     Notice::clear(Notice::INFO);
+	 *     Notice::render(Notice::INFO);
 	 *
 	 * @param   string  Notice type to filter by
 	 * @return  array
