@@ -1,4 +1,4 @@
-<div id="notice">
+<div class="notice">
 <?php foreach($notices as $type => $set): ?>
 	<?php if ( ! empty($set)): ?>
 
