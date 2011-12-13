@@ -1,55 +1,30 @@
-## Introduction
+## Description
 
 Notice is simple and easy to use class for displaying notification messages to the user for Kohana 3.x.
 
-## Instalation
+## Installation instructions
+
+Add this repository as a Git submodule to your application.
 
 	$ git submodule add git://github.com/loonies/kohana-notice.git modules/notice
 	$ git submodule update --init
 
-## General
+Enable module in the *bootstrap*.
 
-A Notice message consist of:
+## Where to get help
 
-*  *type* - the message type
-*  *message* - the message itself
-*  *variables* - the message varibles
-*  *items* - additional messages
+Documentation is available under *guide/notice* directory. If you still need help, open [a support ticket](http://github.com/loonies/kohana-notice/issues) on the Github.
 
-## Configuration
+## Contribution guidelines
 
-Configuration is done by using class properties:
+Fork [the Notice repo](http://github.com/loonies/kohana-notice) and send a pull request or open [an issue](http://github.com/loonies/kohana-notice/issues) on the Github.
 
-*  *Notice::$session* - session type
-*  *Notice::$view* - view file
+Please use Kohana conventions and coding style.
 
-## Usage
+## Contributor list
 
-Add a new message.
+Notice is maintained by Miodrag Tokić.
 
-	Notice::add(Notice::ERROR, 'Unable to download :module. Please:', array('module' => $module), array(
-		'Check your connection', 'Check configuration settings'
-	));
+## License
 
-	Notice::add(Notice::VALIDATION, 'Validation failded:', NULL, $validate->errors('validation'));
-
-	Notice::add(Notice::INFO, Kohana::message('notice', 'no_data'));
-
-Render the notifications.
-
-	View::factory('download')
-		->bind('notice', $notice);
-
-	$notice = Notice::render();
-
-Render the notifications as json (useful for AJAX response).
-
-	Notice::render(NULL, 'json');
-
-Get all the *error* notices as array.
-
-	$errors = Notice::as_array(Notice::ERROR);
-
-Clear the *warning* notices.
-
-	Notice::clear(Notice::WARNING);
+This package is released under the MIT License.
