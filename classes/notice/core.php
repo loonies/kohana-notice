@@ -1,31 +1,21 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Notification messages
+ * Simple and easy to use class for storing and displaying
+ * the application notice messages to the user.
+ * The Notice class uses session to store the notice messages.
  *
- * @package	   Notice
+ * @package    Notice
  * @category   Base
- * @author	   Miodrag Tokić
- * @copyright  (c) 2009-2010, Miodrag Tokić
+ * @author     Miodrag Tokić
+ * @copyright  (c) 2010-2011, Miodrag Tokić
  * @license    MIT
  */
 class Notice_Core {
 
-	/**
-	 * @var  string  Current version
-	 */
-	const VERSION = '0.2';
+	// Current version
+	const VERSION = '0.3';
 
-	/**
-	 * @var  string  Session type
-	 */
-	public static $session = NULL;
-
-	/**
-	 * @var  string  View file
-	 */
-	public static $view = 'notice/base';
-
-	// Notice message types
+	// Notice types
 	const ERROR      = 'error';
 	const WARNING    = 'warning';
 	const VALIDATION = 'validation';
@@ -33,85 +23,65 @@ class Notice_Core {
 	const SUCCESS    = 'success';
 
 	/**
-	 * Adds new notification message
-	 *
-	 * @param   string  Message type
-	 * @param   string  Message text
-	 * @param   array   Message variables
-	 * @param   array   Additional message items
-	 * @return	void
+	 * @var  string  Session type
 	 */
-	public static function add($type, $message = NULL, array $variables = NULL, array $items = array())
+	public static $session = NULL;
+
+	/**
+	 * @var  string  The message file
+	 */
+	public static $message_file = 'notice';
+
+	/**
+	 * Adds a new notice message
+	 *
+	 *     // Add INFO notice
+	 *     Notice::add(Notice::INFO, 'Simple example');
+	 *
+	 *     // Add INFO notice, with a message from the "notice" message file
+	 *     Notice::add(Notice::INFO, ':no_data');
+	 *
+	 * @param   string  Notice type
+	 * @param   string  Message text
+	 * @param   array   Values to replace in the message text
+	 * @param   array   Additional messages
+	 * @return  void
+	 */
+	public static function add($type, $message = NULL, array $values = NULL, array $items = array())
 	{
 		$session = Session::instance(Notice::$session);
 
-		$notifications = $session->get('notice', array());
+		$notices = $session->get('notice', array());
 
-		$notifications[$type][] = array(
-			'message'	=>	__($message, $variables),
-			'items'		=>	$items,
+		if (strpos($message, ':') === 0)
+		{
+			// Get a message from a file
+			$message = Kohana::message(Notice::$message_file, substr($message, 1), $message);
+		}
+
+		$notices[$type][] = array(
+			'type'    => $type,
+			'message' => $message,
+			'values'  => $values,
+			'items'   => $items,
 		);
 
-		$session->set('notice', $notifications);
+		$session->set('notice', $notices);
 	}
 
 	/**
-	 * Displays notifications
+	 * Clears the notices
 	 *
-	 * If notification type omitted, displays all notification types
+	 * If notice type omitted, render all notice types.
 	 *
-	 * @param   string  Notification type
-	 * @param   string  View type
-	 * @return	void
-	 */
-	public static function render($type = NULL, $view = NULL)
-	{
-		switch ($view)
-		{
-			case 'json':
-				$output = json_encode(Notice::as_array($type));
-			break;
-
-			default:
-				$output = View::factory(Notice::$view)
-					->set('notifications', Notice::as_array($type))
-					->render();
-		}
-
-		// Clear the notifications after rendering
-		Notice::clear($type);
-
-		return $output;
-	}
-
-	/**
-	 * Returns the current notification array.
+	 *     // Clears all notices
+	 *     Notice::clear();
 	 *
-	 * @param    string  Notification type
-	 * @return   array
-	 */
-	public static function as_array($type = NULL)
-	{
-		$session = Session::instance(Notice::$session);
-
-		// Import the session data localy
-		$data = $session->as_array();
-
-		if ($type === NULL)
-		{
-			return Arr::path($data, 'notice', array());
-		}
-		else
-		{
-			return array($type => Arr::path($data, 'notice.'.$type));
-		}
-	}
-
-	/**
-	 * Clears the notifications
+	 *     // Clears only INFO notices
+	 *     Notice::clear(Notice::INFO);
 	 *
-	 * @param    string  Notification type
-	 * @return   void
+	 * @param   string  Notice type to filter by
+	 * @return  void
 	 */
 	public static function clear($type = NULL)
 	{
@@ -128,5 +98,79 @@ class Notice_Core {
 		{
 			unset($data['notice'][$type]);
 		}
+	}
+
+	/**
+	 * Return notices as raw array
+	 *
+	 * If notice type omitted, render all notice types.
+	 *
+	 *     // Return all notices
+	 *     Notice::as_array();
+	 *
+	 *     // Return only INFO notices
+	 *     Notice::as_array(Notice::INFO);
+	 *
+	 * @param   string  Notice type to filter by
+	 * @return  array
+	 */
+	public static function as_array($type = NULL)
+	{
+		$session = Session::instance(Notice::$session);
+
+		$notices = $session->get('notice', array());
+
+		$filtered = array();
+
+		foreach ($notices as $_type => $set)
+		{
+			if ($type === $_type OR $type === NULL)
+			{
+				// Add to filtered
+				$filtered[$_type] = $set;
+			}
+		}
+
+		return $filtered;
+	}
+
+	/**
+	 * Render the notices
+	 *
+	 * Notice messages will be translated, grouped by type and cleared.
+	 * If notice type omitted, render all notice types.
+	 *
+	 *     // Renders all notices
+	 *     Notice::render();
+	 *
+	 *     // Renders only INFO notices
+	 *     Notice::render(Notice::INFO);
+	 *
+	 * @param   string  Notice type to filter by
+	 * @return  array
+	 */
+	public static function render($type = NULL)
+	{
+		$rendered = array();
+
+		$notices = Notice::as_array($type);
+
+		foreach ($notices as $_type => $set)
+		{
+			foreach ($set as $notice)
+			{
+				// Translate the notice
+				$rendered[$_type][] = array(
+					'type'    => __($notice['type']),
+					'message' => __($notice['message'], $notice['values']),
+					'items'   => array_map('__', $notice['items']),
+				);
+			}
+		}
+
+		// Clear the notices
+		Notice::clear($type);
+
+		return $rendered;
 	}
 }
