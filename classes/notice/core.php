@@ -6,8 +6,8 @@
  *
  * @package    Notice
  * @category   Base
- * @author     Miodrag Tokić
- * @copyright  (c) 2010-2011, Miodrag Tokić
+ * @author     Miodrag Tokić <mtokic@gmail.com>
+ * @copyright  (c) 2010-2012, Miodrag Tokić
  * @license    MIT
  */
 class Notice_Core {
