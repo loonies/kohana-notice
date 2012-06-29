@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Simple and easy to use class for storing and displaying
  * the application notice messages to the user.
@@ -6,8 +6,8 @@
  *
  * @package    Notice
  * @category   Base
- * @author     Miodrag Tokić
- * @copyright  (c) 2010-2011, Miodrag Tokić
+ * @author     Miodrag Tokić <mtokic@gmail.com>
+ * @copyright  (c) 2010-2012, Miodrag Tokić
  * @license    MIT
  */
 class Notice_Core {
