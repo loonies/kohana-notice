@@ -1,3 +1,5 @@
+<?php defined('SYSPATH') OR die('No direct script access.'); ?>
+
 <?php
 $css_class_map = array(
 	Notice::ERROR      => 'alert-error',
