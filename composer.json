@@ -12,9 +12,6 @@
             "email": "lizard.freddi@gmail.com"
         }
     ],
-    "require": {
-        "kohana/core": ">=3.3"
-    },
     "extra": {
         "branch-alias": {
             "3.3/develop": "3.3.x-dev"
