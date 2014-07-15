@@ -1,0 +1,18 @@
+{
+    "name": "bkhrupa/kohana-notice",
+    "type": "kohana-module",
+    "license": "mit",
+    "authors": [
+        {
+            "name": "Miodrag Tokić",
+            "homepage": "https://github.com/loonies/kohana-notice"
+        },
+        {
+            "name": "Bogdan Khrupa",
+            "email": "lizard.freddi@gmail.com"
+        }
+    ],
+    "require": {
+        "kohana/core": ">=3.3"
+    }
+}
