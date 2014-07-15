@@ -10,7 +10,7 @@
  * @copyright  (c) 2010-2011, Miodrag Tokić
  * @license    MIT
  */
-class Notice_Core {
+class Kohana_Notice {
 
 	// Current version
 	const VERSION = '0.3';
