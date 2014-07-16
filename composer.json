@@ -1,0 +1,21 @@
+{
+	"name": "loonies/kohana-notice",
+	"type": "kohana-module",
+	"description": "Simple and easy to use class for displaying notification messages to the user",
+	"homepage": "https://github.com/loonies/kohana-notice",
+	"license": "MIT",
+	"support": {
+		"issues": "https://github.com/loonies/kohana-notice/issues",
+		"source": "https://github.com/loonies/kohana-notice"
+	},
+	"require": {
+		"php": ">=5.3.3",
+		"kohana/core": ">=3.3",
+		"composer/installers": "~1.0"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-develop": "0.4.x-dev"
+		}
+	}
+}
