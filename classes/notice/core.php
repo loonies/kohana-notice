@@ -13,7 +13,7 @@
 class Notice_Core {
 
 	// Current version
-	const VERSION = '0.3';
+	const VERSION = '0.4.0-dev';
 
 	// Notice types
 	const ERROR      = 'error';
