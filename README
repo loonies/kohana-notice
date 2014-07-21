@@ -1,0 +1,65 @@
+Kohana Notice
+=============
+
+Release: 0.4.0
+
+
+Description
+-----------
+
+Notice is simple and easy to use class for storing and displaying
+notification messages to a user for Kohana 3.x.
+
+Installation instructions
+-------------------------
+
+Requirements:
+
+ - PHP 5.3.3 or newer
+ - Kohana 3.3 or newer
+
+Installing:
+
+ - Install Notice by downloading the source or by using Composer
+ - Enable module in the *bootstrap*
+
+More information:
+
+ - Using Kohana modules [http://kohanaframework.org/3.3/guide/kohana/modules]
+ - Using Composer [http://www.getcomposer.org/]
+
+
+Documentation
+-------------
+
+Documentation is available under the 'guide/notice' directory. If you
+still need help, open a support ticket on the Github
+[http://github.com/loonies/kohana-notice/issues].
+
+
+Contributing
+------------
+
+Send a pull request or open an issue on the Github
+[http://github.com/loonies/kohana-notice].
+
+Please use Kohana conventions and coding style.
+
+
+Authors
+-------
+
+Maintainer:
+
+ - Miodrag Tokić
+
+Contributors:
+
+ - Erick Hartanto
+ - Bogdan Khrupa
+
+
+License
+-------
+
+This package is released under the MIT License.

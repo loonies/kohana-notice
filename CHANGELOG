@@ -1,0 +1,30 @@
+Kohana Notice changelog
+=======================
+
+Version 0.4.0 (21st July 2014)
+------------------------------
+
+ - Add Composer installation support
+ - Add PSR-0 support 
+ - Add LICENSE file
+ - Add CHANGELOG file
+
+Version 0.3.0 (13th December 2011)
+----------------------------------
+
+ - Kill view render magic, notices are always rendered as array
+ - Support lookup for a message from the message file if a message is
+   prefixed with colon (:)
+ - Use CSS 'class' instead of 'id' in the view
+
+Version 0.2.0 (8th May 2011)
+----------------------------
+
+ - Major rewrite
+ - Support JSON and HTML rendering
+ - Support configurable session type
+
+Version 0.1.0 (12th September 2010)
+-----------------------------------
+
+ - Initial release

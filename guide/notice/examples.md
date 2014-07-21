@@ -45,3 +45,4 @@ Display the notices:
 Remove the *warning* notices:
 
 	Notice::clear(Notice::WARNING);
+

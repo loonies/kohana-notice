@@ -1,3 +1,5 @@
+<?php defined('SYSPATH') OR die('No direct script access.'); ?>
+
 <div class="notice">
 <?php foreach($notices as $type => $set): ?>
 	<?php if ( ! empty($set)): ?>

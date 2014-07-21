@@ -48,3 +48,4 @@ Use [Notice::clear] to remove notices. Filter them by *type* parameter (default 
 ## Displaying notices
 
 This module comes with Kohana view file (*views/notice/base*), however the Notice class doesn't limit the way notices are displayed to the user. Use them as json, with KOstache, KOtal or whatever you like.
+

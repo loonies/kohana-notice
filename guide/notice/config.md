@@ -15,3 +15,4 @@ MESSAGE_FILE
 :  Message file to use.
 
 If you want to change properties set them somewhere in the *bootstrap*.
+
