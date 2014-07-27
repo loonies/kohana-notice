@@ -40,7 +40,7 @@ still need help, open a support ticket on the Github
 Contributing
 ------------
 
-Send a pull request or open an issue on the Github
+Open an issue or send a pull request on the Github
 [http://github.com/loonies/kohana-notice].
 
 Please use Kohana conventions and coding style.
@@ -63,3 +63,4 @@ License
 -------
 
 This package is released under the MIT License.
+
