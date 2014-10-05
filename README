@@ -23,6 +23,16 @@ Installing:
  - Install Notice by downloading the source or by using Composer
  - Enable module in the *bootstrap*
 
+'composer.json' definition:
+
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/loonies/kohana-notice"
+    }],
+    "require": {
+        "loonies/kohana-notice": "0.4.x-dev"
+    }
+
 More information:
 
  - Using Kohana modules [http://kohanaframework.org/3.3/guide/kohana/modules]
