@@ -1,6 +1,11 @@
 Kohana Notice changelog
 =======================
 
+Version 0.4.1 (27th July 2014)
+------------------------------
+
+ - Fix Composer branch alias name
+
 Version 0.4.0 (21st July 2014)
 ------------------------------
 
