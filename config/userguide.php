@@ -17,7 +17,7 @@ return array(
 			'description' => 'Simple and easy to use class for displaying notification messages to the user.',
 
 			// Copyright message, shown in the footer for this module
-			'copyright' => '&copy; 2010–2011 Miodrag Tokić',
+			'copyright' => 'Copyright &copy; 2010–2014 Miodrag Tokić',
 		)
 	)
 );
