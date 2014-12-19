@@ -1,7 +1,7 @@
 Kohana Notice
 =============
 
-Release: 0.4.1
+Current release: 0.4.2-dev
 
 
 Description
@@ -10,8 +10,8 @@ Description
 Notice is simple and easy to use class for storing and displaying
 notification messages to a user for Kohana 3.x.
 
-Installation instructions
--------------------------
+Installation
+------------
 
 Requirements:
 
@@ -35,8 +35,8 @@ Installing:
 
 More information:
 
- - Using Kohana modules [http://kohanaframework.org/3.3/guide/kohana/modules]
- - Using Composer [http://www.getcomposer.org/]
+ - Using Kohana modules (http://kohanaframework.org/3.3/guide/kohana/modules)
+ - Using Composer (http://www.getcomposer.org)
 
 
 Documentation
@@ -44,14 +44,14 @@ Documentation
 
 Documentation is available under the 'guide/notice' directory. If you
 still need help, open a support ticket on the Github
-[http://github.com/loonies/kohana-notice/issues].
+(http://github.com/loonies/kohana-notice/issues).
 
 
 Contributing
 ------------
 
 Open an issue or send a pull request on the Github
-[http://github.com/loonies/kohana-notice].
+(http://github.com/loonies/kohana-notice).
 
 Please use Kohana conventions and coding style.
 
@@ -69,8 +69,10 @@ Contributors:
  - Bogdan Khrupa
 
 
-License
--------
+Copyright
+---------
 
-This package is released under the MIT License.
+Copyright (C) 2010-2014 Miodrag Tokić.
+
+Released under the MIT License. See the LICENSE file for details.
 
