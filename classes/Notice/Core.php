@@ -6,7 +6,6 @@
  *
  * @package    Notice
  * @category   Base
- * @author     Miodrag Tokić <miki@loonies.io>
  * @copyright  Copyright (C) 2010-2014, Miodrag Tokić
  * @license    MIT
  */
