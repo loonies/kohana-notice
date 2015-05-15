@@ -6,7 +6,7 @@
  *
  * @package    Notice
  * @category   Base
- * @copyright  Copyright (C) 2010-2014, Miodrag Tokić
+ * @copyright  Copyright (C) 2010-2015, Miodrag Tokić
  * @license    MIT
  */
 class Notice_Core {
