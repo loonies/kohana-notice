@@ -6,14 +6,13 @@
  *
  * @package    Notice
  * @category   Base
- * @author     Miodrag Tokić <miki@loonies.io>
- * @copyright  Copyright (C) 2010-2014, Miodrag Tokić
+ * @copyright  Copyright (C) 2010-2015, Miodrag Tokić
  * @license    MIT
  */
 class Notice_Core {
 
 	// Current version
-	const VERSION = '0.4.1';
+	const VERSION = '0.4.2';
 
 	// Notice types
 	const ERROR      = 'error';

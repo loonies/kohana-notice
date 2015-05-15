@@ -1,11 +1,21 @@
 Kohana Notice changelog
 =======================
 
+Version 0.4.2 (15th May 2015)
+-----------------------------
+
+Maintenance release
+
+Version 0.4.1 (27th July 2014)
+------------------------------
+
+ - Fix Composer branch alias name
+
 Version 0.4.0 (21st July 2014)
 ------------------------------
 
  - Add Composer installation support
- - Add PSR-0 support 
+ - Add PSR-0 support
  - Add LICENSE file
  - Add CHANGELOG file
 
@@ -28,3 +38,4 @@ Version 0.1.0 (12th September 2010)
 -----------------------------------
 
  - Initial release
+
